@@ -6,7 +6,7 @@ LifeGameScene2::LifeGameScene2()
 {
 	_reserveX = 1;
 	_reserveY = 0;
-	_reserveStatus = 0;
+	_reserveStatus = 2;
 	_moveCount = 0;
 }
 
@@ -80,8 +80,8 @@ void LifeGameScene2::initialize()
 			_pSprite[ count ]->setScale(SELL_WIDTH, SELL_HEIGHT);
 			pLayer->addChild(_pSprite[ count ]);
 			_tips[ y ][ x ] = map[ y ][ x ]; 
+			count++;
 		}
-		count++;
 	}
 
 	//パックマン
@@ -181,7 +181,7 @@ void LifeGameScene2::process(float delta)
 		_pStatus = _reserveStatus;
 		_moveCount = 0;
 	}
-	//this->collision( );
+	this->getDot( );
 	_pPosiX += _pMoveX;
 	_pPosiY += _pMoveY;
 	_pPacck->setPosition(_pPosiX, _pPosiY);
@@ -245,4 +245,70 @@ bool LifeGameScene2::collision( ) {
 		break;
 	}
 	return false;
+}
+
+//ドットの取得
+void LifeGameScene2::getDot( ) {
+	// レイヤーの作成
+	int sPosiX = 0;
+	int sPosiY = 0;
+	float beginY = RESOLUTION_HEIGHT - 25;
+	float offsetY = -50;
+	int tipposiX = 0;
+	int tipposiY = 0;
+
+	switch( _pStatus ) {
+	//↑
+	case 0:
+		sPosiX = _pPosiX;
+		sPosiY = 480 - _pPosiY;
+		tipposiX = sPosiX / 50;
+		tipposiY = sPosiY / 50;
+		if ( _tips[ tipposiY ][ tipposiX ] == 0 ) {
+			if ( sPosiY == ( tipposiY * 50 ) ) {
+				int position = 13 * tipposiY + tipposiX + 1;
+				_pSprite[ position ]->setPosition( 1000, 1000 );
+			}
+		}
+		break;
+	//↓
+	case 1:
+		sPosiX = _pPosiX;
+		sPosiY = 480 - _pPosiY;
+		tipposiX = sPosiX / 50;
+		tipposiY = sPosiY / 50;
+		if ( _tips[ tipposiY ][ tipposiX ] == 0 ) {
+			if ( sPosiY == ( tipposiY * 50 ) ) {
+				int position = 13 * tipposiY + tipposiX;
+				_pSprite[ position ]->setPosition( 1000, 1000 );
+			}
+		}
+		break;
+	//→
+	case 2:
+		sPosiX = _pPosiX + 50;
+		sPosiY = RESOLUTION_HEIGHT - _pPosiY;
+		tipposiX = sPosiX / 50;
+		tipposiY = (sPosiY + 1 ) / 50;
+		if ( _tips[ tipposiY ][ tipposiX ] == 0 ) {
+			if ( sPosiX == ( tipposiX * 50 ) + 25 ) {
+				int position = 13 * tipposiY + tipposiX;
+				_pSprite[ position ]->setPosition( 1000, 1000 );
+			}
+		}
+		break;
+	//←
+	case 3:
+		sPosiX = _pPosiX - 1;
+		sPosiY = RESOLUTION_HEIGHT - _pPosiY;
+		tipposiX = sPosiX / 50;
+		tipposiY = (sPosiY + 1 ) / 50;
+		if ( _tips[ tipposiY ][ tipposiX  ] == 0 ) {
+			if ( sPosiX == ( tipposiX * 50 ) ) {
+				int position = 13 * tipposiY + tipposiX;
+				_pSprite[ position ]->setPosition( 1000, 1000 );
+			}
+		}
+		break;
+	}
 }
