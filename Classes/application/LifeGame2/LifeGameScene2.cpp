@@ -4,6 +4,10 @@ USING_NS_CC;
 
 LifeGameScene2::LifeGameScene2()
 {
+	_reserveX = 0;
+	_reserveY = 0;
+	_reserveStatus = 0;
+	_moveCount = 0;
 }
 
 LifeGameScene2::~LifeGameScene2()
@@ -17,23 +21,23 @@ void LifeGameScene2::initialize()
 	this->addChild(pLayer);
 
 	// タイトルの作成
-	auto *pTitleLabel = Label::create("LifeGame2", "fonts/arial.ttf", 24);
+	/*auto *pTitleLabel = Label::create("LifeGame2", "fonts/arial.ttf", 24);
 	pTitleLabel->setAnchorPoint(Vec2(0, 1));
 	pTitleLabel->setColor(Color3B(128, 128, 128));
 	pTitleLabel->setPosition(100, RESOLUTION_HEIGHT-100);
 	pTitleLabel->setZOrder(10);
-	pLayer->addChild(pTitleLabel);
+	pLayer->addChild(pTitleLabel);*/
 
 	//チップの配置
 	int map[10][13] = {
   {1,1,1,1,1,1,1,1,1,1,1,1,1},
   {1,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,1,1,0,0,1,1,1,0,0,1},
-  {1,0,0,0,1,0,0,0,0,1,0,0,1},
-  {1,0,0,0,1,0,0,0,0,1,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,1,1,1,1,1,1,1},
+  {1,0,1,0,0,0,0,0,0,0,0,0,1},
+  {1,0,1,1,1,0,0,1,1,1,0,0,1},
+  {1,0,1,0,1,0,0,0,0,1,0,0,1},
+  {1,0,1,0,1,0,0,0,0,1,0,0,1},
+  {1,0,1,0,0,0,0,0,0,0,0,0,1},
+  {1,0,1,0,0,0,1,1,1,1,1,1,1},
   {1,0,0,0,0,0,0,0,0,0,0,0,1},
   {1,1,1,1,1,1,1,1,1,1,1,1,1},
 };
@@ -82,7 +86,7 @@ void LifeGameScene2::initialize()
 
 	//パックマン
 	//初期位置
-	_pPosiX = 100;
+	_pPosiX = 150;
 	_pPosiY = RESOLUTION_HEIGHT - 100;
 	//移動方向
 	_pMoveX = 1;
@@ -111,32 +115,29 @@ void LifeGameScene2::leave()
 
 bool LifeGameScene2::input()
 {
-	float offsetX = 50;
-	float offsetY = -50;
-
 	// キー判定
 	const auto &key = GetKeyManager();
 	if( key.isPressRepeatFast( KeyCode::KEY_UP_ARROW ) )
 	{
-		_pMoveX = 0;
-		_pMoveY = 1;
-		_pStatus = 0;
+		_reserveX = 0;
+		_reserveY = 1;
+		_reserveStatus = 0;
 		return true;
 	} else if( key.isPressRepeatFast( KeyCode::KEY_DOWN_ARROW ) )
 	{
-		_pMoveX = 0;
-		_pMoveY = -1;
-		_pStatus = 1;
+		_reserveX = 0;
+		_reserveY = -1;
+		_reserveStatus = 1;
 		return true;
 	} else if( key.isPressRepeatFast( KeyCode::KEY_RIGHT_ARROW ) ) {
-		_pMoveX = 1;
-		_pMoveY = 0;
-		_pStatus = 2;
+		_reserveX = 1;
+		_reserveY = 0;
+		_reserveStatus = 2;
 		return true;
 	} else if( key.isPressRepeatFast( KeyCode::KEY_LEFT_ARROW ) ) {
-		_pMoveX = -1;
-		_pMoveY = 0;
-		_pStatus = 3;
+		_reserveX = -1;
+		_reserveY = 0;
+		_reserveStatus = 3;
 		return true;
 	}
 
@@ -145,48 +146,65 @@ bool LifeGameScene2::input()
 
 void LifeGameScene2::process(float delta)
 {
+	_moveCount++;
+	if ( _moveCount >= 50 ) {
+		_pMoveX = _reserveX;
+		_pMoveY = _reserveY;
+		_pStatus = _reserveStatus;
+		_moveCount = 0;
+	}
+	this->collision( );
 	_pPosiX += _pMoveX;
 	_pPosiY += _pMoveY;
-	this->collision( );
 	_pPacck->setPosition(_pPosiX, _pPosiY);
 
 
 }
 
+//壁のあたり判定
 void LifeGameScene2::collision( ) {
 	int sPosiX = 0;
 	int sPosiY = 0;
+	float beginY = RESOLUTION_HEIGHT - 25;
+	float offsetY = -50;
 	int tipposiX = 0;
 	int tipposiY = 0;
 
 	switch( _pStatus ) {
 	case 0:
-		sPosiX = _pPosiX + 50;
+		sPosiX = _pPosiX;
 		sPosiY = 480 - _pPosiY;
 		tipposiX = sPosiX / 50;
 		tipposiY = sPosiY / 50;
 		if ( _tips[ tipposiY ][ tipposiX ] == 1 ) {
-			_pPosiY = -sPosiY + 480;  
+			_pPosiY = beginY + offsetY * tipposiY - 25;  
+		}
+		break;
+	case 1:
+		sPosiX = _pPosiX;
+		sPosiY = 480 - _pPosiY;
+		tipposiX = sPosiX / 50;
+		tipposiY = sPosiY / 50 + 1;
+		if ( _tips[ tipposiY ][ tipposiX ] == 1 ) {
+			_pPosiY = beginY + offsetY * tipposiY + 76;  
 		}
 		break;
 	case 2:
 		sPosiX = _pPosiX + 50;
-		sPosiY = 480 - _pPosiY;
+		sPosiY = RESOLUTION_HEIGHT - _pPosiY;
 		tipposiX = sPosiX / 50;
-		tipposiY = sPosiY / 50;
+		tipposiY = (sPosiY + 1 ) / 50;
 		if ( _tips[ tipposiY ][ tipposiX ] == 1 ) {
 			_pPosiX = sPosiX - 51;
 		}
 		break;
 	case 3:
-		sPosiX = _pPosiX - 50;
-		sPosiY = 480 - _pPosiY;
+		sPosiX = _pPosiX - 1;
+		sPosiY = RESOLUTION_HEIGHT - _pPosiY;
 		tipposiX = sPosiX / 50;
-		tipposiY = sPosiY / 50;
+		tipposiY = (sPosiY + 1 ) / 50;
 		if ( _tips[ tipposiY ][ tipposiX  ] == 1) {
-			if ( ( tipposiX + 1 ) * 50 > _pPosiX  ) {
-				_pPosiX = sPosiX + 51;
-			}
+			_pPosiX = sPosiX + 2;
 		}
 		break;
 	}
