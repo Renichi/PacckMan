@@ -34,7 +34,7 @@ static const char *const MENU_NAME[ MENU_MAX ] = {
 	"LifeGame",
 	"Shooting",
 	"KawamotoDebug",
-	"LifeGame2"
+	"DotEater"
 };
 
 // メニュー処理
@@ -44,7 +44,7 @@ std::function<void(void)> MENU_FUNC[ MENU_MAX ] = {
 	[]{ GameManager::getInstance()->pushScene( CreateScene( SceneID::LIFE_GAME ) ); },
 	[]{ GameManager::getInstance()->pushScene( CreateScene( SceneID::SHOOTING ) ); },
 	[]{ GameManager::getInstance()->pushScene(CreateScene(SceneID::KAWAMOTO)); },
-	[]{ GameManager::getInstance()->pushScene(CreateScene(SceneID::LIFE_GAME2)); }
+	[]{ GameManager::getInstance()->pushScene(CreateScene(SceneID::DotEater)); }
 };
 
 DebugScene::DebugScene() :
