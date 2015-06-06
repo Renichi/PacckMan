@@ -6,7 +6,7 @@
 #include "HelloWorld/HelloWorldScene.h"
 #include "LifeGame/LifeGameScene.h"
 #include "Shooting/ShootingScene.h"
-#include "LifeGame2/LifeGameScene2.h"
+#include "DotEater/DotEaterScene.h"
 
 #ifndef NDEBUG
 #include "DebugScene.h"
@@ -22,7 +22,7 @@ GameScene *SceneCreator::create( SceneID scene )
 		case SceneID::LIFE_GAME: pScene = LifeGameScene::create(); break;
 		case SceneID::SHOOTING: pScene = ShootingScene::create(); break;
 		case SceneID::KAWAMOTO: pScene = LifeGameScene::create(); break;
-		case SceneID::LIFE_GAME2: pScene = LifeGameScene2::create(); break;
+		case SceneID::DotEater: pScene = DotEaterScene::create(); break;
 		
 #ifndef NDEBUG
 		case SceneID::DEBUG: pScene = DebugScene::create(); break;

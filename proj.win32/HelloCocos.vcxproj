@@ -140,7 +140,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\application\DebugScene.cpp" />
     <ClCompile Include="..\Classes\application\HelloWorld\HelloWorldScene.cpp" />
-    <ClCompile Include="..\Classes\application\LifeGame2\LifeGameScene2.cpp" />
+    <ClCompile Include="..\Classes\application\DotEater\DotEaterScene.cpp" />
     <ClCompile Include="..\Classes\application\LifeGame\LifeGameScene.cpp" />
     <ClCompile Include="..\Classes\application\RootScene.cpp" />
     <ClCompile Include="..\Classes\application\SceneCreator.cpp" />
@@ -166,7 +166,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClInclude Include="..\Classes\application\common.h" />
     <ClInclude Include="..\Classes\application\DebugScene.h" />
     <ClInclude Include="..\Classes\application\HelloWorld\HelloWorldScene.h" />
-    <ClInclude Include="..\Classes\application\LifeGame2\LifeGameScene2.h" />
+    <ClInclude Include="..\Classes\application\DotEater\DotEaterScene.h" />
     <ClInclude Include="..\Classes\application\LifeGame\LifeGameScene.h" />
     <ClInclude Include="..\Classes\application\RootScene.h" />
     <ClInclude Include="..\Classes\application\SceneCreator.h" />

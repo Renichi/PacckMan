@@ -37,8 +37,8 @@
     <Filter Include="src\Classes\application\Shooting">
       <UniqueIdentifier>{1d44a5bc-ceb4-4443-be67-d63bb4b1541d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Classes\application\LifeGame2">
-      <UniqueIdentifier>{8cc27743-f03b-46f5-8a6d-4ae665638fb1}</UniqueIdentifier>
+    <Filter Include="src\Classes\application\DotEater">
+      <UniqueIdentifier>{e0fb7165-d1aa-4062-b426-f9ecc4da26d7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -105,8 +105,8 @@
     <ClCompile Include="..\Classes\application\Shooting\ShootingCollider.cpp">
       <Filter>src\Classes\application\Shooting</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\application\LifeGame2\LifeGameScene2.cpp">
-      <Filter>src\Classes\application\LifeGame2</Filter>
+    <ClCompile Include="..\Classes\application\DotEater\DotEaterScene.cpp">
+      <Filter>src\Classes\application\DotEater</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -194,8 +194,8 @@
     <ClInclude Include="..\Classes\application\Shooting\ShootingCollider.h">
       <Filter>src\Classes\application\Shooting</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\application\LifeGame2\LifeGameScene2.h">
-      <Filter>src\Classes\application\LifeGame2</Filter>
+    <ClInclude Include="..\Classes\application\DotEater\DotEaterScene.h">
+      <Filter>src\Classes\application\DotEater</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

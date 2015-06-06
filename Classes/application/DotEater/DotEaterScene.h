@@ -1,19 +1,19 @@
 ﻿#pragma once
 #include "common.h"
 
-class LifeGameScene2 : public GameScene {
+class DotEaterScene : public GameScene {
 
 	typedef GameScene super;
 
 public:
 
 	// 生成関数
-	CREATE_FUNC(LifeGameScene2);
+	CREATE_FUNC(DotEaterScene);
 
 public:
 
-	LifeGameScene2();
-	~LifeGameScene2();
+	DotEaterScene();
+	~DotEaterScene();
 
 	virtual void initialize() override;
 	virtual void finalize() override;
@@ -22,7 +22,8 @@ public:
 	virtual bool input() override;
 	virtual void process(float delta) override;
 	//パックマンの更新
-	void collision( );
+	bool collision( );
+	void getDot( );
 
 private:
 	cocos2d::Sprite *_pPacck;
@@ -33,4 +34,8 @@ private:
 	int _pStatus;
 	int _pMoveX;
 	int _pMoveY;
+	int _reserveX;
+	int _reserveY;
+	int _reserveStatus;
+	int _moveCount;
 };

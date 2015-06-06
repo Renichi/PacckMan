@@ -13,8 +13,7 @@ public:
 		LIFE_GAME,
 		SHOOTING,
 		KAWAMOTO,
-
-		LIFE_GAME2,
+		DotEater,
 
 #ifndef NDEBUG
 		DEBUG

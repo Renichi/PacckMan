@@ -1,8 +1,8 @@
-﻿#include "LifeGameScene2.h"
+﻿#include "DotEaterScene.h"
 
 USING_NS_CC;
 
-LifeGameScene2::LifeGameScene2()
+DotEaterScene::DotEaterScene()
 {
 	_reserveX = 1;
 	_reserveY = 0;
@@ -10,18 +10,18 @@ LifeGameScene2::LifeGameScene2()
 	_moveCount = 0;
 }
 
-LifeGameScene2::~LifeGameScene2()
+DotEaterScene::~DotEaterScene()
 {
 }
 
-void LifeGameScene2::initialize()
+void DotEaterScene::initialize()
 {
 	// レイヤーの作成
 	auto *pLayer = GameLayer::create();
 	this->addChild(pLayer);
 
 	// タイトルの作成
-	/*auto *pTitleLabel = Label::create("LifeGame2", "fonts/arial.ttf", 24);
+	/*auto *pTitleLabel = Label::create("DotEaterScene", "fonts/arial.ttf", 24);
 	pTitleLabel->setAnchorPoint(Vec2(0, 1));
 	pTitleLabel->setColor(Color3B(128, 128, 128));
 	pTitleLabel->setPosition(100, RESOLUTION_HEIGHT-100);
@@ -101,19 +101,19 @@ void LifeGameScene2::initialize()
 	pLayer->addChild(_pPacck);
 }
 
-void LifeGameScene2::finalize()
+void DotEaterScene::finalize()
 {
 }
 
-void LifeGameScene2::enter()
+void DotEaterScene::enter()
 {
 }
 
-void LifeGameScene2::leave()
+void DotEaterScene::leave()
 {
 }
 
-bool LifeGameScene2::input()
+bool DotEaterScene::input()
 {
 	// キー判定
 	const auto &key = GetKeyManager();
@@ -144,7 +144,7 @@ bool LifeGameScene2::input()
 	return false;
 }
 
-void LifeGameScene2::process(float delta)
+void DotEaterScene::process(float delta)
 {
 	_moveCount++;
 	//自動方向転換(仮)
@@ -190,7 +190,7 @@ void LifeGameScene2::process(float delta)
 }
 
 //壁のあたり判定
-bool LifeGameScene2::collision( ) {
+bool DotEaterScene::collision( ) {
 	int sPosiX = 0;
 	int sPosiY = 0;
 	float beginY = RESOLUTION_HEIGHT - 25;
@@ -248,7 +248,7 @@ bool LifeGameScene2::collision( ) {
 }
 
 //ドットの取得
-void LifeGameScene2::getDot( ) {
+void DotEaterScene::getDot( ) {
 	// レイヤーの作成
 	int sPosiX = 0;
 	int sPosiY = 0;
