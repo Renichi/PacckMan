@@ -4,7 +4,7 @@ USING_NS_CC;
 
 LifeGameScene2::LifeGameScene2()
 {
-	_reserveX = 0;
+	_reserveX = 1;
 	_reserveY = 0;
 	_reserveStatus = 0;
 	_moveCount = 0;
@@ -147,13 +147,41 @@ bool LifeGameScene2::input()
 void LifeGameScene2::process(float delta)
 {
 	_moveCount++;
+	//自動方向転換(仮)
+	while ( this->collision( ) ) {
+		int pattern = rand( ) % 4;
+		if ( pattern == _pStatus ) continue;
+
+		switch ( pattern ) {
+		case 0:
+			_reserveX = 0;
+			_reserveY = 1;
+			_reserveStatus = 0;
+			break;
+		case 1:
+			_reserveX = 0;
+			_reserveY = -1;
+			_reserveStatus = 1;
+			break;
+		case 2:
+			_reserveX = 1;
+			_reserveY = 0;
+			_reserveStatus = 2;
+			break;
+		case 3:
+			_reserveX = -1;
+			_reserveY = 0;
+			_reserveStatus = 3;
+			break;
+		}
+	}
 	if ( _moveCount >= 50 ) {
 		_pMoveX = _reserveX;
 		_pMoveY = _reserveY;
 		_pStatus = _reserveStatus;
 		_moveCount = 0;
 	}
-	this->collision( );
+	//this->collision( );
 	_pPosiX += _pMoveX;
 	_pPosiY += _pMoveY;
 	_pPacck->setPosition(_pPosiX, _pPosiY);
@@ -162,7 +190,7 @@ void LifeGameScene2::process(float delta)
 }
 
 //壁のあたり判定
-void LifeGameScene2::collision( ) {
+bool LifeGameScene2::collision( ) {
 	int sPosiX = 0;
 	int sPosiY = 0;
 	float beginY = RESOLUTION_HEIGHT - 25;
@@ -171,6 +199,7 @@ void LifeGameScene2::collision( ) {
 	int tipposiY = 0;
 
 	switch( _pStatus ) {
+	//↑
 	case 0:
 		sPosiX = _pPosiX;
 		sPosiY = 480 - _pPosiY;
@@ -178,17 +207,21 @@ void LifeGameScene2::collision( ) {
 		tipposiY = sPosiY / 50;
 		if ( _tips[ tipposiY ][ tipposiX ] == 1 ) {
 			_pPosiY = beginY + offsetY * tipposiY - 25;  
+			return true;
 		}
 		break;
+	//↓
 	case 1:
 		sPosiX = _pPosiX;
 		sPosiY = 480 - _pPosiY;
 		tipposiX = sPosiX / 50;
 		tipposiY = sPosiY / 50 + 1;
 		if ( _tips[ tipposiY ][ tipposiX ] == 1 ) {
-			_pPosiY = beginY + offsetY * tipposiY + 76;  
+			_pPosiY = beginY + offsetY * tipposiY + 76;
+			return true;
 		}
 		break;
+	//→
 	case 2:
 		sPosiX = _pPosiX + 50;
 		sPosiY = RESOLUTION_HEIGHT - _pPosiY;
@@ -196,8 +229,10 @@ void LifeGameScene2::collision( ) {
 		tipposiY = (sPosiY + 1 ) / 50;
 		if ( _tips[ tipposiY ][ tipposiX ] == 1 ) {
 			_pPosiX = sPosiX - 51;
+			return true;
 		}
 		break;
+	//←
 	case 3:
 		sPosiX = _pPosiX - 1;
 		sPosiY = RESOLUTION_HEIGHT - _pPosiY;
@@ -205,7 +240,9 @@ void LifeGameScene2::collision( ) {
 		tipposiY = (sPosiY + 1 ) / 50;
 		if ( _tips[ tipposiY ][ tipposiX  ] == 1) {
 			_pPosiX = sPosiX + 2;
+			return true;
 		}
 		break;
 	}
+	return false;
 }
